@@ -4,16 +4,21 @@ import DetailsMembers from "@/components/members/DetailsMembers";
 import BackButton from "@/components/ui/backButton";
 import Title from "@/components/ui/title";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation"; // Para acessar os parâmetros dinamicamente
 
 // app/members/[id]/page.tsx
-export default function MemberDetail({ params }: { params: { id: any } }) {
+export default function MemberDetail() {
   const [profile, setProfile] = useState<any[] | null>(null);
   const [loading, setLoading] = useState(true);
+  
+  const router = useRouter();
+  const { id } = router.query; // Aqui pegamos o 'id' da URL
 
   useEffect(() => {
+    if (!id) return; // Evita erro de execução quando 'id' ainda não está disponível
     async function fetchProfile() {
       try {
-        const data = await getDetailsMembers(Number(params.id));
+        const data = await getDetailsMembers(Number(id));
         setProfile(data);
         console.log(data);
       } catch (error) {
@@ -24,7 +29,7 @@ export default function MemberDetail({ params }: { params: { id: any } }) {
     }
 
     fetchProfile();
-  }, [params.id]);
+  }, [id]);
 
   if (loading) return <p>Carregando...</p>;
   if (!profile || profile.length === 0) return <p>Nenhum perfil encontrado.</p>;
