@@ -4,15 +4,14 @@ import DetailsMembers from "@/components/members/DetailsMembers";
 import BackButton from "@/components/ui/backButton";
 import Title from "@/components/ui/title";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; // Para acessar os parâmetros dinamicamente
+import { useParams } from "next/navigation"; // Corrigido para usar useParams
 
 // app/members/[id]/page.tsx
 export default function MemberDetail() {
   const [profile, setProfile] = useState<any[] | null>(null);
   const [loading, setLoading] = useState(true);
   
-  const router = useRouter();
-  const { id } = router.query; // Aqui pegamos o 'id' da URL
+  const { id } = useParams(); // Usando useParams para acessar o 'id' da URL
 
   useEffect(() => {
     if (!id) return; // Evita erro de execução quando 'id' ainda não está disponível

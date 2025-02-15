@@ -3,7 +3,7 @@ import React from "react";
 interface TableProps {
   columns: { key: string; label: string }[]; // Cada coluna terá uma chave e um rótulo
   data: any[];
-  actions?: (row: any) => JSX.Element;
+  actions?: (row: any) => React.ReactNode; // Modifiquei de JSX.Element para React.ReactNode
   isLoading?: boolean;
 }
 

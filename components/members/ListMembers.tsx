@@ -9,7 +9,7 @@ import Link from "next/link";
 export default function ListMembers() {
   const columns = [
     { key: "id", label: "ID" },
-    {key: "created_at", label: "Data criado" },
+    { key: "created_at", label: "Data criado" },
     { key: "name", label: "Nome" },
     { key: "email", label: "Email" },
     { key: "id_role", label: "Cargo" },
@@ -23,15 +23,15 @@ export default function ListMembers() {
       setIsLoading(true);
       try {
         const members = await getMembers();
-        const data = members.map((member: any) => ({
+        const data = members?.map((member: any) => ({
           id: member.id,
           created_at: member.created_at,
           name: member.name,
           email: member.auth_email,
           id_role: member.name_role,
-          your_profile: member.your_profile
+          your_profile: member.your_profile,
         }));
-        setMembers(data);
+        setMembers(data || []); 
         console.log(data);
       } catch (error) {
         console.error("Erro ao buscar membros:", error);
@@ -41,8 +41,10 @@ export default function ListMembers() {
     }
     fetchMembers();
   }, []);
+
   const permission = members.find((member) => member.id_role === 'admin' && member.your_profile === 'yes');
   console.log(permission);
+
   return (
     <Table
       columns={columns}
@@ -62,16 +64,15 @@ export default function ListMembers() {
           
           {row.your_profile === 'no' ? (
             permission && (
-                <Link href={`/members/${row.id}`} className="p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition">
-              <Edit size={14} />
-            </Link> 
-            )
-            
-          ):
-            <Link href="/profile" className="p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition">
+              <Link href={`/members/${row.id}`} className="p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition">
                 <Edit size={14} />
+              </Link> 
+            )
+          ) : (
+            <Link href="/profile" className="p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition">
+              <Edit size={14} />
             </Link>
-          }
+          )}
         </div>
       )}
     />
