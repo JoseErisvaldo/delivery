@@ -67,3 +67,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+.scrollbar-none {
+  -ms-overflow-style: none;  /* Para remover no Edge e IE */
+  scrollbar-width: none; /* Para remover no Firefox */
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none; /* Para remover no Chrome, Safari e Edge */
+}
