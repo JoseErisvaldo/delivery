@@ -19,13 +19,27 @@ export const signUpAction = async (formData: FormData) => {
     );
   }
 
-  const { error } = await supabase.auth.signUp({
+  const {data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
       emailRedirectTo: `${origin}/auth/callback`,
     },
   });
+  if (data.user) {
+    // Inserir na tabela `users`
+    const { error: insertError } = await supabase.from("users").insert([
+      {
+        user_id: data.user.id,
+        id_role: 1
+      },
+    ]);
+
+    if (insertError) {
+      console.error("Erro ao inserir usuário:", insertError.message);
+      return encodedRedirect("error", "/sign-up", insertError.message);
+    }
+  }
 
   if (error) {
     console.error(error.code + " " + error.message);
@@ -37,6 +51,7 @@ export const signUpAction = async (formData: FormData) => {
       "Thanks for signing up! Please check your email for a verification link.",
     );
   }
+  
 };
 
 export const signInAction = async (formData: FormData) => {
@@ -131,4 +146,61 @@ export const signOutAction = async () => {
   const supabase = await createClient();
   await supabase.auth.signOut();
   return redirect("/sign-in");
+};
+
+export const signBranchAction = async (formData: FormData ) => {
+  const email = formData.get("email")?.toString();
+  const password = formData.get("password")?.toString();
+  const supabase = await createClient();
+  const origin = (await headers()).get("origin");
+  const name = formData.get("name")?.toString();
+  const phone = formData.get("phone")?.toString();
+  const role = formData.get("role")?.toString();
+  const id_branch = formData.get("id_branch")?.toString();
+
+  if (!email || !password) {
+    return encodedRedirect(
+      "error",
+      "/sign-up",
+      "Email and password are required",
+    );
+  }
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: `${origin}/auth/callback`,
+    },
+  });
+
+  if (data.user) {
+    // Inserir na tabela `users`
+    const { error: insertError } = await supabase.from("users").insert([
+      {
+        user_id: data.user.id,
+        name,
+        whatsapp: phone,
+        id_role: role,
+        created_at: new Date(),
+        id_branch: id_branch
+      },
+    ]);
+
+    if (insertError) {
+      console.error("Erro ao inserir usuário:", insertError.message);
+      return encodedRedirect("error", "/sign-up", insertError.message);
+    }
+  }
+
+  if (error) {
+    console.error(error.code + " " + error.message);
+    return encodedRedirect("error", "/sign-up", error.message);
+  } else {
+    return encodedRedirect(
+      "success",
+      "/sign-up",
+      "Thanks for signing up! Please check your email for a verification link.",
+    );
+  }
 };
