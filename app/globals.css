@@ -78,3 +78,25 @@
 .scrollbar-none::-webkit-scrollbar {
   display: none; /* Para remover no Chrome, Safari e Edge */
 }
+
+
+.is-loading {
+  animation: spin 1s linear infinite;
+  text-align: center;
+  font-size: 80px; /* Aumentado de 50px para 80px */
+  width: 100px; /* Tamanho do contêiner */
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ;
+}
+
+@keyframes spin {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 360deg;
+  }
+}

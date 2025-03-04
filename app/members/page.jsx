@@ -26,7 +26,6 @@ export default function Members() {
 
         {isOpen && (
           <SideBarEnd title="Novo membro" onClick={() => setIsOpen(!isOpen)}>
-            dsa
             <NewMembers />
           </SideBarEnd>
         )}
