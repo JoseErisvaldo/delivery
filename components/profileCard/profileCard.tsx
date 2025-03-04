@@ -27,15 +27,13 @@ export default function ProfileCard({ user }: { user: any }) {
     fetchProfile();
   }, []);
 
-  if (loading) return <p>Carregando...</p>;
+  if (loading) return 
+
   if (!profile || profile.length === 0) return <p>Nenhum perfil encontrado.</p>;
 
   return (
     <div className="w-full flex flex-col gap-4 items-center">
-      <div className="is-loading">
-  <LoaderCircle size={80} />
-</div>
-
+      
       <div>
         <img
           className="h-[250px] w-screen object-cover"
