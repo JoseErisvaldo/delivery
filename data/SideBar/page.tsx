@@ -12,6 +12,11 @@ export const sideBar = [
     name: "Dashboard",
   },
   {
+    href: "/ingredient",
+    icon: <Users />,
+    name: "Ingredientes",
+  },
+  {
     href: "/members",
     icon: <Users />,
     name: "Membros",

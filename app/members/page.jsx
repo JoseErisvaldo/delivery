@@ -9,20 +9,19 @@ import { useState } from "react";
 
 export default function Members() {
   const [isOpen, setIsOpen] = useState(false);
-  
 
   return (
     <div>
-      <div> 
+      <div>
         <Title title="Lista de Membros" />
       </div>
       <div className="flex justify-end mb-5">
-      <button 
-        onClick={() => setIsOpen(!isOpen)} 
-        className="bg-blue-600 text-white flex items-center gap-2 justify-end p-3 cursor-pointer hover:opacity-80 border border-foreground/10 rounded"
-      >
-        <CirclePlus /> Novo membro
-      </button>
+        <button 
+          onClick={() => setIsOpen(!isOpen)} 
+          className="bg-blue-600 text-white flex items-center gap-2 justify-end p-3 cursor-pointer hover:opacity-80 border border-foreground/10 rounded"
+        >
+          <CirclePlus /> Novo membro
+        </button>
 
         {isOpen && (
           <SideBarEnd title="Novo membro" onClick={() => setIsOpen(!isOpen)}>
